@@ -1,8 +1,5 @@
 const MononomBase = require('./mononom-base.js');
-const {
-	operators,
-	symbols
-} = require('@multioperator/ariphmetic');
+const NumberMononom = require('./number-base.js');
 
 /**
  * Класс представляет собой математическое выражение, представляющее собой произведение констант и переменных, взятых в константных степенях
@@ -23,62 +20,29 @@ class Mononom extends MononomBase{
 		}
 	}
 	
+	splitNumber(){
+		let parts = this.split(([key, value])=>(typeof key === 'number' ? 0 : 1));
+		parts[0] = parts[0] ? new NumberMononom(...parts[0]) : new NumberMononom();
+		parts[1] = parts[1] || new Mononom();
+		return parts;
+	}
 	
+	/**
+	 * Проверка на то, что все элементы заданы числами
+	 */
+	isNumber(){
+		for(let key of this.keys()){
+			if(typeof key !== 'number'){
+				return false;
+			}
+		}
+		return true;
+	}
 	
 }
 
 
-const {
-	add
-	sub
-	neg
-	mul
-	div
-	pow
-} = operators;
 	
-//add.def
 
-const mulNumber = (a, b)=>{
-	let c = a.clone()
-	c.add(b, 1);
-	return c;
-}
-
-neg.def(Mononom, (a)=>(mulNumber(a, -1)));
-
-mul.def(Mononom, Mononom, (a, b)=>{
-	let c = a.clone();
-	for(let [key, value] of b){
-		c.add(key, value);
-	}
-	return c;
-});
-mul.def(Mononom, Number, mulNumber);
-mul.def(Number, Mononom, (a, b)=>(mulNumber(b, a));
-
-div.def(Mononom, Mononom, (a, b)=>{
-	let c = a.clone();
-	for(let [key, value] of b){
-		c.add(key, -value);
-	}
-	return c;
-});
-div.def(Mononom, Number, (a, b)=>{
-	let c = a.clone()
-	c.add(b, -1);
-	return c;
-});
-div.def(Number, Mononom, (a, b)=>{
-	let c = b.clone()
-	c.add(a, -1);
-	return c;
-});
-
-pow.def(Mononom, Number, (a, b)=>{
-	let c = a.clone();
-	c.pow(b);
-	return c;
-});
 
 module.exports = Mononom;
