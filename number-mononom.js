@@ -2,7 +2,7 @@ const MononomBase = require('./mononom-base.js');
 const {
 	operators,
 	symbols
-} = require('@multioperator/ariphmetic');
+} = require('@grunmouse/multioperator-ariphmetic');
 
 
 /**

@@ -1,7 +1,11 @@
+const {
+	symbols:{NEG, ADD, SUB}
+} = require('@grunmouse/multioperator-ariphmetic');
+
 
 class MononomBase extends Map {
 	get(key){
-		if(this.has(key){
+		if(this.has(key)){
 			return super.get(key);
 		}
 		else{
@@ -38,13 +42,19 @@ class MononomBase extends Map {
 		}
 	}
 	
+	/**
+	 * Прибавить несколько
+	 */
 	addMany(iterable){
 		for(let [key, value] of iterable){
 			this.add(key, value);
 		}
 		return this
 	}
-
+	
+	/**
+	 * Вычесть несколько
+	 */
 	subMany(iterable){
 		for(let [key, value] of iterable){
 			this.add(key, -value);
@@ -132,7 +142,7 @@ class MononomBase extends Map {
 	 * Находит общие множители одночленов
 	 */
 	cross(b, callback){
-		callback = callback || (a, b)=>(a === b ? a : 0);
+		callback = callback || ((a, b)=>(a === b ? a : 0));
 		let result = new this.constructor();
 		for(let [key, value] of b){
 			if(this.has(key)){

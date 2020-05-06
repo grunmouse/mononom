@@ -1,5 +1,5 @@
 const MononomBase = require('./mononom-base.js');
-const NumberMononom = require('./number-base.js');
+const NumberMononom = require('./number-mononom.js');
 
 /**
  * Класс представляет собой математическое выражение, представляющее собой произведение констант и переменных, взятых в константных степенях
@@ -41,7 +41,7 @@ class Mononom extends MononomBase{
 	
 }
 
-
+module.exports = Mononom;
 	
 
 
